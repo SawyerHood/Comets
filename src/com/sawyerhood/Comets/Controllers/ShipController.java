@@ -15,7 +15,9 @@ package com.sawyerhood.Comets.Controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Vector2;
 import com.sawyerhood.Comets.Model.Bullet;
 import com.sawyerhood.Comets.Model.Ship;
 import com.sawyerhood.Comets.Model.SpaceObject;
@@ -27,8 +29,8 @@ public class ShipController extends AbstractController {
 	private Ship ship;
 	private ArrayList<SpaceObject> objects;
 	private int forward;
-	private int turnLeft;
-	private int turnRight;
+	private int left;
+	private int right;
 	private int fire;
 	private final float coolDownTime = (float) .3;
 	private float lastShot;
@@ -40,8 +42,8 @@ public class ShipController extends AbstractController {
 		super(screen);
 		this.ship = ship;
 		this.forward = forward;
-		this.turnLeft = turnLeft;
-		this.turnRight = turnRight;
+		this.left = turnLeft;
+		this.right = turnRight;
 		this.fire = fire;
 		this.objects = objects;
 		this.lastShot = 0;
@@ -60,17 +62,17 @@ public class ShipController extends AbstractController {
 		{
 		
 		
-		if(Gdx.input.isKeyPressed(turnLeft))
+		if(Gdx.input.isKeyPressed(left))
 		{
-			ship.turnLeft(delta);
+			ship.left(delta);
 		}
 		
-		if(Gdx.input.isKeyPressed(turnRight))
+		if(Gdx.input.isKeyPressed(right))
 		{
-			ship.turnRight(delta);
+			ship.right(delta);
 		}
 		
-		if(Gdx.input.isKeyPressed(fire))
+		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 		{
 			if(lastShot <= 0)
 			{
@@ -82,18 +84,24 @@ public class ShipController extends AbstractController {
 		
 		if(Gdx.input.isKeyPressed(forward))
 		{
-			ship.accelerate(delta);
+			ship.forward(delta);
 		}
 		
 		else if(Gdx.input.isKeyPressed(backwards))
 		{
-			ship.deccelerate(delta);
+			ship.backwards(delta);
 		}
 		//If the ship is not being accelerated, slow it down a tad, like in the original.
 		else
 		{
 			ship.slowDown(delta);
 		}
+	
+		Vector2 v = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight()-Gdx.input.getY());
+		v = v.sub(ship.getX(), ship.getY());
+		v = v.nor();
+		ship.setAngle(v.angle());
+		screen.setAngle(v.angle());
 		
 		}
 		

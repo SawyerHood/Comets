@@ -42,12 +42,14 @@ public class GameScreen extends AbstractScreen {
 	private int wave = 0;
 	private final int cometOffset = 2;
 	private int rrange = 100;
+	private float angle = 0;
 	
 	
 	public GameScreen(CometsGame game) {
 		
 		
 		super(game);
+		
 		
 		Ship ship = new Ship(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		
@@ -58,7 +60,7 @@ public class GameScreen extends AbstractScreen {
 		
 		controllers = new ArrayList<AbstractController>();
 		controllers.add(new SpaceObjectController(this, objects));
-		controllers.add(new ShipController(this, ship,this.objects, Keys.UP, Keys.LEFT, Keys.RIGHT, Keys.SPACE, Keys.DOWN));
+		controllers.add(new ShipController(this, ship,this.objects, Keys.W, Keys.A, Keys.D, Keys.SPACE, Keys.S));
 		//controllers.add(new ShipController(this, ship2, Keys.W, Keys.A, Keys.D));
 		controllers.add(new CollisionController(this, objects));
 		controllers.add(new BulletController(this, objects));
@@ -94,7 +96,7 @@ public class GameScreen extends AbstractScreen {
 		batch.begin();
 		TextBounds bounds = font.getBounds("Score: " + score);
 		font.draw(batch, "Score: " + score, bounds.width, 2*bounds.height);
-		bounds = font.getBounds("Lives: " + lives);
+		bounds = font.getBounds("Livese: " + lives);
 		font.draw(batch, "Lives: " + lives , bounds.width, Gdx.graphics.getHeight() - 2*bounds.height);
 		batch.end();
 		
@@ -218,6 +220,11 @@ public class GameScreen extends AbstractScreen {
 	public void removeComets(int toRemove)
 	{
 		cometsAlive -= toRemove;
+	}
+	
+	public void setAngle(float angle)
+	{
+		this.angle = angle;
 	}
 
 	

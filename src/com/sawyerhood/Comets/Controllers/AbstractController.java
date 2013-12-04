@@ -16,7 +16,7 @@ import com.sawyerhood.Comets.Screens.GameScreen;
 
 public abstract class AbstractController {
 
-	private GameScreen screen;
+	protected GameScreen screen;
 	public AbstractController(GameScreen screen)
 	{
 		this.screen = screen;

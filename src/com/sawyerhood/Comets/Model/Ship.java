@@ -78,6 +78,25 @@ public class Ship extends SpaceObject {
 		acc(delta, -acc);
 	}
 	
+	public void forward(float delta)
+	{
+		this.setY(this.getY() + 200*delta);
+	}
+	
+	public void backwards(float delta)
+	{
+		this.setY(this.getY() - 200*delta);
+	}
+	
+	public void left(float delta)
+	{
+		this.setX(this.getX() - 200*delta);
+	}
+	
+	public void right(float delta)
+	{
+		this.setX(this.getX() + 200*delta);
+	}
 	private void acc(float delta, float rate)
 	{
 		this.setxVel(rate*delta*(float)Math.cos(Math.toRadians(this.getAngle())) + this.getxVel());
